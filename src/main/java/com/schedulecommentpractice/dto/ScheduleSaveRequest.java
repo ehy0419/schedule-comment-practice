@@ -13,12 +13,13 @@ public class ScheduleSaveRequest {
     private String password;
 
     // 리퀘스트 에서는 생성자가 없어도 동작을 한다.
-    ///  기본생성자 - 생성자가 아무것도 없으면 만들어진다.
-    /// 파라미터가 없는 것 - 기본생성자
-//    public ScheduleSaveRequest() {}
+    // 내부적으로 기본생성자가 있기 때문.
 }
 
-// 내부적으로
+///  기본생성자 - 생성자가 아무것도 없으면 만들어진다.
+/// 파라미터가 없는 것 - 기본생성자
+//    public ScheduleSaveRequest() {}
+
 // Reflection 이라는 걸 써서 강제로 데이터를 매핑해버린다.
 ///  테스트 코드에서 배운다.
 
