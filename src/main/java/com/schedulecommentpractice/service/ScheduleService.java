@@ -42,9 +42,19 @@ public class ScheduleService {
     public List<ScheduleGetAllResponse> findAll(String author) {
         List<Schedule> schedules = scheduleRepository.findAll();
         List<ScheduleGetAllResponse> scheduleGetAllResponses = new ArrayList<>();
+        // author 파라미터가 존재하지 않는 경우
         if (author == null) {
-
-            new ScheduleGetAllResponse();
+            for (Schedule schedule : schedules) {
+                scheduleGetAllResponses.add(new ScheduleGetAllResponse(
+                        schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContent(),
+                        schedule.getAuthor(),
+                        schedule.getCreatedAt(),
+                        schedule.getModifiedAt()
+                ));
+            }
+            return scheduleGetAllResponses;
         }
 
         ///  수정일 기준 내림차순을 정렬
@@ -54,7 +64,20 @@ public class ScheduleService {
         ///  lv2. 일정 조회 과제 중, 작성자명은 조회 조건으로 포함될 수 있고, 포함되지 않을수 있다고 한다.
         ///  findAll(String author)의 의미는???
 
+
+        // author 파라미터가 존재하는 경우
+        for (Schedule schedule : schedules) {
+            if (author.equals(schedule.getAuthor())) {
+                scheduleGetAllResponses.add(new ScheduleGetAllResponse(
+                        schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContent(),
+                        schedule.getAuthor(),
+                        schedule.getCreatedAt(),
+                        schedule.getModifiedAt()
+                ));
+            }
+        }
+        return scheduleGetAllResponses;
     }
-
-
 }
