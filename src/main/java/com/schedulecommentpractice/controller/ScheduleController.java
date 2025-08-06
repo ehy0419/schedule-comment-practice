@@ -1,14 +1,15 @@
 package com.schedulecommentpractice.controller;
 
+import com.schedulecommentpractice.dto.ScheduleGetAllResponse;
 import com.schedulecommentpractice.dto.ScheduleSaveRequest;
 import com.schedulecommentpractice.dto.ScheduleSaveResponse;
 import com.schedulecommentpractice.entity.Schedule;
 import com.schedulecommentpractice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,4 +23,21 @@ public class ScheduleController {
     ){
         return ResponseEntity.ok(scheduleService.saveSchedule(request));
     }
+
+    ///  lv2. 일정 조회 중 하나의 api로 작성
+    @GetMapping("/schedules")
+    public ResponseEntity<List<ScheduleGetAllResponse>> getSchedules(
+            @RequestParam(required = true) String author
+    ) {
+        return ResponseEntity.ok(scheduleService.findAll(author));
+    }
+
+    // ResponseEntity<ScheduleGetAllResponse> : 인터페이스
+    ///  @RequestParam(required = true) 에서
+    //(required = true) 빼먹지 않고 넣어야 한다.
+
+    //ResponseEntity<ScheduleGetAllResponse>
+    // 전체 조회니까 ResponseEntity<List<ScheduleGetAllResponse>> 으로 변경
+
 }
+
