@@ -18,6 +18,7 @@ public class ScheduleSaveResponse {     /// API 응답에서는 비밀번호는 
     private final LocalDateTime modifiedAt;
     //    private String password;        // API 응답에서는 비밀번호는 제외
 
+    ///  생성자를 통해서 데이터를 넣어줘야 한다.
     public ScheduleSaveResponse(Long id, String title, String content, String author, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.title = title;

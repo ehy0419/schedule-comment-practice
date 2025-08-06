@@ -25,4 +25,17 @@ public class Schedule extends BaseEntity {
     // 작성일과 수정일 완성.
 //    private LocalDateTime createdAt;
 //    private LocalDateTime modifiedAt;
+
+    public Schedule(
+            String title,
+            String content,
+            String author,
+            String password
+    ) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.password = password;
+    }
+
 }
