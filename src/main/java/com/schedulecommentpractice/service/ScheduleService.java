@@ -1,7 +1,9 @@
 package com.schedulecommentpractice.service;
 
 import com.schedulecommentpractice.dto.*;
+import com.schedulecommentpractice.entity.Comment;
 import com.schedulecommentpractice.entity.Schedule;
+import com.schedulecommentpractice.repository.CommentRepository;
 import com.schedulecommentpractice.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public ScheduleSaveResponse saveSchedule(ScheduleSaveRequest request) {
@@ -98,11 +101,29 @@ public class ScheduleService {
         //id가 1까지 있는 상황
         //id가 10인 상황이라면 null 이 없을 수 있다.
         // 그래서 orElseThrow() 를 사용한다.
+
+        List<Comment> comments = commentRepository.findAll();
+        List<CommentGetResponse> dtos = new ArrayList<>();
+        for (Comment comment : comments) {
+            if (comment.getScheduleId() == scheduleId) {
+                dtos.add(
+                        new CommentGetResponse(
+                                comment.getId(),
+                                comment.getContent(),
+                                comment.getAuthor(),
+                                comment.getCreatedAt(),
+                                comment.getModifiedAt()
+                        )
+                );
+            }
+        }
+
         return new ScheduleGetResponse(
                 schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getAuthor(),
+                dtos,                       // List<CommentGetResponse> 타입이 일치하다...
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
         );
