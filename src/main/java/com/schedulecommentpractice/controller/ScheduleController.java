@@ -56,4 +56,7 @@ public class ScheduleController {
     ) {
         return ResponseEntity.ok(scheduleService.update(scheduleId, request));
     }
+
+    ///  개발 전, 공통 조건으로
+    ///  일정 수정, 삭제 시 선택한 일정의 비밀번호와 요청할 때 함께 보낸 비밀번호가 일치할 경우에만 가능하다.
 }

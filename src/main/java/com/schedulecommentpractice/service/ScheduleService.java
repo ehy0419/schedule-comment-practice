@@ -6,6 +6,7 @@ import com.schedulecommentpractice.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +113,25 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalArgumentException(scheduleId + "해당 id의 일정이 없습니다.")
         );
+
+        ///  개발 전, 공통 조건으로
+        ///  일정 수정, 삭제 시 선택한 일정의 비밀번호와 요청할 때 함께 보낸 비밀번호가 일치할 경우에만 가능하다.
+        // 아래 두개를 비교해야 한다...
+//        schedule.getPassword();
+//        request.getPassword();
+
+        if (!ObjectUtils.nullSafeEquals(request.getTitle(), schedule.getTitle())) {
+            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.");
+        }
+//        if (!schedule.getPassword().equals(request.getPassword())) {
+//            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.")
+//        }
+        // 하지만, 스케줄업데이트리퀘스트에 비밀번호가 없을 수 있다.
+        // 그러면 schedule.getPassword()가 null이 나올 수 있다.
+        //!null.getPassword().equals(request.getPassword())) {}
+        /// null-safe 한 코드를 짜야 한다.
+
+
         ///  더티 체킹
         schedule.updateTitleAuthor(     // 스케줄에서 업데이트 해주기 위해서, 스케줄 엔티티에서 업데이트 메소드 생성
                 request.getTitle(),
