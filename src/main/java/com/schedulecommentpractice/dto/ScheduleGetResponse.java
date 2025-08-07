@@ -14,7 +14,14 @@ public class ScheduleGetResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public ScheduleGetResponse(Long id, String title, String content, String author, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public ScheduleGetResponse(
+            Long id,
+            String title,
+            String content,
+            String author,
+            LocalDateTime createdAt,
+            LocalDateTime modifiedAt
+    ) {
         this.id = id;
         this.title = title;
         this.content = content;
