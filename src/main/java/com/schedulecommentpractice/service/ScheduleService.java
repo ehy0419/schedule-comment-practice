@@ -155,4 +155,20 @@ public class ScheduleService {
                 schedule.getAuthor()
         );
     }
+
+    ///  일정 삭제
+    @Transactional  // 조회가 아니기에 readonly 없음
+    public void deleteOne(long scheduleId, String password) {
+        // delete 일 때는 아무것도 반환하지 않아도 된다. public ScheduleUpdateResponse
+        // -> public void
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException(scheduleId + "해당 id의 일정이 없습니다.")
+        );
+
+        ///  기능 비밀번호 비교
+        if (!ObjectUtils.nullSafeEquals(password, schedule.getPassword())) {
+            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.");
+        }
+        scheduleRepository.deleteById(scheduleId);
+    }
 }
