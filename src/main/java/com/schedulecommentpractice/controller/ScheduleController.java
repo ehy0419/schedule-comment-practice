@@ -1,6 +1,7 @@
 package com.schedulecommentpractice.controller;
 
 import com.schedulecommentpractice.dto.ScheduleGetAllResponse;
+import com.schedulecommentpractice.dto.ScheduleGetResponse;
 import com.schedulecommentpractice.dto.ScheduleSaveRequest;
 import com.schedulecommentpractice.dto.ScheduleSaveResponse;
 import com.schedulecommentpractice.service.ScheduleService;
@@ -39,5 +40,15 @@ public class ScheduleController {
     //ResponseEntity<ScheduleGetAllResponse>
     // 전체 조회니까 ResponseEntity<List<ScheduleGetAllResponse>> 으로 변경
 
+    ///  선택 일정 조회
+    @GetMapping("/schedules/{scheduleId}")
+    public ResponseEntity<ScheduleGetResponse> getSchedule(
+            // 비교
+            @PathVariable long scheduleId <- null이 절대 오지 않고
+//            @PathVariable Long scheduleId <- null이 될 수 있다.
+    ) {
+        return ResponseEntity.ok(scheduleService.findOne(scheduleId));
+    }
 }
 
+31분 영상부터 보기
