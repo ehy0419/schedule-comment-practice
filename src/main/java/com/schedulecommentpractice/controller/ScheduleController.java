@@ -1,9 +1,6 @@
 package com.schedulecommentpractice.controller;
 
-import com.schedulecommentpractice.dto.ScheduleGetAllResponse;
-import com.schedulecommentpractice.dto.ScheduleGetResponse;
-import com.schedulecommentpractice.dto.ScheduleSaveRequest;
-import com.schedulecommentpractice.dto.ScheduleSaveResponse;
+import com.schedulecommentpractice.dto.*;
 import com.schedulecommentpractice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,11 +41,19 @@ public class ScheduleController {
     @GetMapping("/schedules/{scheduleId}")
     public ResponseEntity<ScheduleGetResponse> getSchedule(
             // 비교
-            @PathVariable long scheduleId <- null이 절대 오지 않고
-//            @PathVariable Long scheduleId <- null이 될 수 있다.
+            @PathVariable long scheduleId       // <- null이 절대 오지 않고, 기본형 변수 primitive, 클래스가 아니다.
+//            @PathVariable Long scheduleId     // <- null이 될 수 있다
     ) {
         return ResponseEntity.ok(scheduleService.findOne(scheduleId));
     }
-}
 
-31분 영상부터 보기
+    ///  일정 수정
+    // 수정이기때문 Put
+    @PutMapping("/schedules/{scheduleId}")
+    public ResponseEntity<ScheduleUpdateResponse> updateSchedule(
+            @PathVariable long scheduleId,
+            @RequestBody ScheduleUpdateRequest request
+    ) {
+        return ResponseEntity.ok(scheduleService.update(scheduleId, request));
+    }
+}

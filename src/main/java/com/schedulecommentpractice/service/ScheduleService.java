@@ -1,8 +1,6 @@
 package com.schedulecommentpractice.service;
 
-import com.schedulecommentpractice.dto.ScheduleGetAllResponse;
-import com.schedulecommentpractice.dto.ScheduleSaveRequest;
-import com.schedulecommentpractice.dto.ScheduleSaveResponse;
+import com.schedulecommentpractice.dto.*;
 import com.schedulecommentpractice.entity.Schedule;
 import com.schedulecommentpractice.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -86,5 +84,42 @@ public class ScheduleService {
             }
         }
         return scheduleGetAllResponses;
+    }
+
+    ///  일정 단건 조회
+    @Transactional(readOnly = true)
+    public ScheduleGetResponse findOne(long scheduleId) {
+
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException(scheduleId + "해당 id의 일정이 없습니다.")
+        );
+        // null이 될 수 있을까요?? 일정이 없을 수 있다.
+        //id가 1까지 있는 상황
+        //id가 10인 상황이라면 null 이 없을 수 있다.
+        // 그래서 orElseThrow() 를 사용한다.
+        return new ScheduleGetResponse(
+                schedule.getId(),
+                schedule.getTitle(),
+                schedule.getContent(),
+                schedule.getAuthor(),
+                schedule.getCreatedAt(),
+                schedule.getModifiedAt()
+        );
+    }
+    ///  일정 수정  - readonly 안된다 - update
+    @Transactional
+    public ScheduleUpdateResponse update(long scheduleId, ScheduleUpdateRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException(scheduleId + "해당 id의 일정이 없습니다.")
+        );
+        ///  더티 체킹
+        schedule.updateTitleAuthor(     // 스케줄에서 업데이트 해주기 위해서, 스케줄 엔티티에서 업데이트 메소드 생성
+                request.getTitle(),
+                request.getAuthor()
+        );
+        return new ScheduleUpdateResponse(
+                schedule.getTitle(),
+                schedule.getAuthor()
+        );
     }
 }
