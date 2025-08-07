@@ -120,9 +120,22 @@ public class ScheduleService {
 //        schedule.getPassword();
 //        request.getPassword();
 
-        if (!ObjectUtils.nullSafeEquals(request.getTitle(), schedule.getTitle())) {
-            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.");
+        /// 선택1
+        String inputPassword = request.getPassword();
+        if (inputPassword != null) {
+            throw new IllegalArgumentException("비밀번호가 비교가 불가능합니다.");
         }
+        if (inputPassword.equals(schedule.getPassword())) {
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다");
+        }
+
+        /// 선택4. 검증 validation으로 할 수 있다.
+
+        /// 선택3 - 선택2 개선안
+//        if (!ObjectUtils.nullSafeEquals(request.getPassword(), schedule.getPassword())) {
+//            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.");
+//        }
+        /// 선택2
 //        if (!schedule.getPassword().equals(request.getPassword())) {
 //            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.")
 //        }
