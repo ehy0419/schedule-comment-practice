@@ -64,7 +64,7 @@ public class ScheduleController {
     /// 삭제 기능에 심화 과정 중으로 Header 라는 것을 배웁니다.
     @DeleteMapping("/schedules/{scheduleId}")
     public void deleteSchedule(
-            @PathVariable long scheduleId,
+            @PathVariable long scheduleId, // password 에 해당하는 내용이 없으면 아무나 삭제가 가능
             @RequestParam String password
             // 사실은 RequestParam은 하면 안된다.
             // 비번이 유출될 위험이 있다.
