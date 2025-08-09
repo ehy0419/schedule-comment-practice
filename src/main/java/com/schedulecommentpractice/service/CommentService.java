@@ -39,7 +39,7 @@ public class CommentService {
             throw new IllegalStateException("댓글은 최대 10개까지만 작성할 수 있습니다.");
         }
 
-        ///  도전과제의 핵심이었다...
+        ///  도전과제의 핵심이었다... /
         Comment comment = new Comment(
                 request.getComment(),
                 request.getAuthor(),
