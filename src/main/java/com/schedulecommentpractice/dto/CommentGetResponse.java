@@ -19,5 +19,6 @@ public class CommentGetResponse {
         this.author = author;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        // api 응답에 비밀번호 제외.
     }
 }
