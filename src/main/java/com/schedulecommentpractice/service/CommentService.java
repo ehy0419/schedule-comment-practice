@@ -23,6 +23,13 @@ public class CommentService {
     @Transactional
     public CommentSaveResponse save(long scheduleId, CommentSaveRequest request) {
 
+        if (request.getContent() == null) {
+            throw new IllegalStateException("댓글 내용은 필수값입니다.");
+        }
+        if (request.getContent().length() > 100) {
+            throw new IllegalStateException("댓글 내용은 최대 100자입니다.");
+        }
+
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalArgumentException(scheduleId + "해당 id의 일정이 없습니다.")
         );
@@ -41,7 +48,7 @@ public class CommentService {
 
         ///  도전과제의 핵심이었다... /
         Comment comment = new Comment(
-                request.getComment(),
+                request.getContent(),
                 request.getAuthor(),
                 request.getPassword(),
                 schedule.getId()

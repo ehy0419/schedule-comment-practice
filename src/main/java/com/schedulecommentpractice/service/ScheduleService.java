@@ -22,6 +22,26 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleSaveResponse saveSchedule(ScheduleSaveRequest request) {
+        ///  도전과제 7. 유저의 입력에 대한 검증 수행
+        if (request.getTitle() == null) {
+            throw new IllegalStateException("일정 제목은 필수값입니다.");
+        }
+        if (request.getTitle().length() > 30) {
+            throw new IllegalStateException("일정 제목은 최대 30자입니다.");
+        }
+        if (request.getContent() == null) {
+            throw new IllegalStateException("일정 내용은 필수값입니다.");
+        }
+        if (request.getContent().length() > 200) {
+            throw new IllegalStateException("일정 내용은 최대 200자입니다.");
+        }
+        if (request.getAuthor() == null) {
+            throw new IllegalStateException("작성자명은 필수값입니다.");
+        }
+        if (request.getPassword() == null) {
+            throw new IllegalStateException("비밀번호는 필수값입니다.");
+        }
+
         Schedule schedule = new Schedule(           // Schedule 의 생성자 부분
                 request.getTitle(),
                 request.getContent(),

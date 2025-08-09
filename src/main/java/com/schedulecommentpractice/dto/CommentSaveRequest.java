@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class CommentSaveRequest {
 
-    private String comment;
+    private String content;
     private String author;
     private String password;
 }
